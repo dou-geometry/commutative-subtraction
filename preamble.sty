@@ -1,0 +1,183 @@
+\ProvidesPackage{preamble}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+% https://qiita.com/zr_tex8r/items/5c14042078b20edbfb07#%E4%B8%AD%E5%9B%BD%E8%AA%9E%E9%9F%93%E5%9B%BD%E8%AA%9E%E3%81%AE%E6%89%B1%E3%81%84
+\usepackage[japanese,tchinese]{pxbabel}
+
+\newcommand{\jp}{\foreignlanguage{japanese}}
+\newcommand{\hT}{\textcolor{white}} % Hidden text
+
+\usepackage[dvips]{graphicx,color} % KWU
+\usepackage[dvipdfmx,bookmarks=true,bookmarksnumbered=true,%
+bookmarkstype=toc,colorlinks=true,linkcolor=blue,urlcolor=blue,unicode=true,%
+citecolor=blue]%
+{hyperref}
+\usepackage{pxjahyper}
+
+\usepackage{nameref}
+
+\usepackage{soul}
+\newcommand{\HL}[1]{\hl{\mbox{#1}}}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mdframed}
+
+\usepackage{tikz}
+
+%\usepackage[imagemagick]{sagetex} % imagemagick option is requried for 3d plots
+                                  % http://mirrors.ibiblio.org/CTAN/macros/latex/contrib/sagetex/sagetex.pdf#subsubsection.3.2.1
+\usepackage{float}
+
+% \usepackage{MnSymbol}
+
+% http://www.texfaq.org/FAQ-fixnam
+\renewcommand{\appendixname}{附錄}
+% \renewcommand{\bibname}{引用}
+\renewcommand{\figurename}{圖}
+\renewcommand{\tablename}{表}
+\renewcommand{\contentsname}{目錄}
+%\renewcommand{\abstractname}{{\LARGE 前言、摘要與研究目的}} % consider LARGE or huge
+\renewcommand{\listfigurename}{圖目錄} % https://tex.stackexchange.com/a/276034/238638
+\renewcommand{\listtablename}{表目錄} % https://www.cs.pu.edu.tw/~wckuo/doc/latex123/node12.html
+
+
+
+
+%%% Provided by: https://tex.stackexchange.com/a/591690/238638
+\newcounter{mycounter} \stepcounter{mycounter} % Counter mycounter has now value 1.
+\newif\ifdfnused\dfnusedfalse % Define \ifdfnused an set to false. (True, when a defn-environment was used in the current section. False otherwise.)
+\newtheorem{dfn}{定義} % Define dfn-environment.
+\AfterEndEnvironment{dfn}{\dfnusedtrue} % When a dfn-environment was used, set dfnused to true.
+\counterwithin{dfn}{mycounter} % Reset dfn-counter every time when mycounter is incremented.
+
+
+\newcounter{mycounterZwei} \stepcounter{mycounterZwei} % Counter mycounter has now value 1.
+\newif\ifdfnusedz\dfnusedzfalse % Define \ifdfnused an set to false. (True, when a defn-environment was used in the current section. False otherwise.)
+\newtheorem{prf}{證明} % Define dfn-environment.
+\AfterEndEnvironment{prf}{\dfnusedztrue} % When a dfn-environment was used, set dfnused to true.
+\counterwithin{prf}{mycounterZwei} % Reset dfn-counter every time when mycounter is incremented.
+
+
+\newcounter{mycounterDrei} \stepcounter{mycounterDrei} % Counter mycounter has now value 1.
+\newif\ifdfnusedd\dfnuseddfalse % Define \ifdfnused an set to false. (True, when a defn-environment was used in the current section. False otherwise.)
+\newtheorem{rgn}{條件} % Define dfn-environment.
+\AfterEndEnvironment{rgn}{\dfnuseddtrue} % When a dfn-environment was used, set dfnused to true.
+\counterwithin{rgn}{mycounterDrei} % Reset dfn-counter every time when mycounter is incremented.
+
+\let\oldsubsection\subsection % Save old \section-command.
+\def\subsection{% Define new section-command:
+   \ifdfnused% If dfn-environment was used ...
+      \stepcounter{mycounter}% ... then increment mycounter (this will set defn-counter to 0) ...
+   \fi% ... otherwise do nothing.
+   \dfnusedfalse% Set dfnused to false as we start a new section (of course, in this new section there was no defn-environment until now).
+
+   \ifdfnusedz% If dfn-environment was used ...
+      \stepcounter{mycounterZwei}% ... then increment mycounter (this will set defn-counter to 0) ...
+   \fi% ... otherwise do nothing.
+   \dfnusedzfalse% Set dfnused to false as we start a new section (of course, in this new section there was no defn-environment until now).
+
+
+   \ifdfnusedd% If dfn-environment was used ...
+      \stepcounter{mycounterDrei}% ... then increment mycounter (this will set defn-counter to 0) ...
+   \fi% ... otherwise do nothing.
+   \dfnuseddfalse% Set dfnused to false as we start a new section (of course, in this new section there was no defn-environment until now).
+
+   \oldsubsection% Start new section.
+}
+
+
+\newtheorem{thm}{定理}
+%\newtheorem{dfn}{定義}
+\newtheorem{exDfn}[dfn]{\makebox[0pt][r]{擴充}定義} % https://tex.stackexchange.com/q/590528/238638
+\makeatletter
+\@addtoreset{dfn}{subsection}
+\makeatother
+\newtheorem{Q}{問題}
+\newenvironment{fQ}[1]{
+\begin{mdframed}
+  \begin{Q}#1
+}{
+  \\
+  \end{Q}
+\end{mdframed}
+}
+\newtheorem{isu}[Q]{待審疑問}
+%\newtheorem{rgn}{條件}% [dfn]
+\newtheorem{hyp}{猜想}
+\newtheorem{sus}{假設}
+\newtheorem{axm}[thm]{公理}
+\newtheorem{obv}{觀察}
+
+\counterwithout{equation}{section}
+\counterwithout{footnote}{section}
+
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}} % https://tex.stackexchange.com/a/121871/238638
+
+\let\vertparallel\parallel
+\def\parallel{\mathrel{/\mkern-5mu/}} % https://tex.stackexchange.com/a/336413/238638
+
+%https://tex.stackexchange.com/a/2327/238638
+\newenvironment{qte}{
+\newpage
+\topskip0pt
+\vspace*{\fill}
+\begin{center}
+}{
+\end{center}
+\vspace*{\fill}
+\pagebreak
+}
+
+\newcommand{\hr}{\par\noindent\rule{\textwidth}{0.4pt}} % https://tex.stackexchange.com/a/371469/238638
+
+\usetikzlibrary{positioning,arrows.meta}
+
+\newcommand\eba[2]{\ensuremath{{_#1}\underrightarrow{エ}{_#2}}}
+\newcommand\floor[1]{\ensuremath{\lfloor#1\rfloor}}
+
+
+%Draft only
+\usepackage{showlabels} % https://www.overleaf.com/learn/latex/Latex-questions/Keep_track_of_your_labels_with_showlabels
+
+
+\newcommand{\bibTitle}[1]{``#1''}
+
+\setlength{\parindent}{2em}
+
+% \usepackage{listings}
+% \lstloadlanguages{Haskell}
+% \lstnewenvironment{code}
+%     {\lstset{}%
+%       \csname lst@SetFirstLabel\endcsname}
+%     {\csname lst@SaveFirstLabel\endcsname}
+%     \lstset{
+%       basicstyle=\small\ttfamily,
+%       flexiblecolumns=false,
+%       basewidth={0.5em,0.45em},
+%       literate={+}{{$+$}}1 {/}{{$/$}}1 {*}{{$*$}}1 {=}{{$=$}}1
+%                {>}{{$>$}}1 {<}{{$<$}}1 {\\}{{$\lambda$}}1
+%                {\\\\}{{\char`\\\char`\\}}1
+%                {->}{{$\rightarrow$}}2 {>=}{{$\geq$}}2 {<-}{{$\leftarrow$}}2
+%                {<=}{{$\leq$}}2 {=>}{{$\Rightarrow$}}2
+%                {\ .}{{$\circ$}}2 {\ .\ }{{$\circ$}}2
+%                {>>}{{>>}}2 {>>=}{{>>=}}2
+%                {|}{{$\mid$}}1
+%                %{<<<}{{$\lll$}}2 {>>>}{{$\ggg$}}2 {-<}{{$\leftY$}}1
+%     }
+
+\usepackage{minted}
+\definecolor{lightgrey}{gray}{0.9}
+\newminted[code]{haskell}{linenos, bgcolor=lightgrey, firstnumber=last, frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize}
+\newminted[spec]{haskell}{}
+
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+
+\long\def\ignore#1{}
