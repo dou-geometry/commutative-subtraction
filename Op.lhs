@@ -18,11 +18,11 @@
 module Op where
 \end{code}
 
-\ignore{ % Following is not shown in LaTeX doc
+\begin{comment} % Following is not shown in LaTeX doc
 \begin{code}
 notImplemented = undefined -- Comment out this line in production
 \end{code}
-}
+\end{comment}
 
 Implementation of Subtraction
 
