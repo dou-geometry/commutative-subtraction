@@ -24,7 +24,7 @@ notImplemented = undefined -- Comment out this line in production
 \end{code}
 \end{comment}
 
-Implementation of Subtraction
+\section{Implementation of Subtraction}
 
 \begin{code}
 data R = R Double deriving Show
@@ -46,11 +46,15 @@ instance Num R where
     (*) _ _ = notImplemented
 \end{code}
 
+\section{Implementation of Addition}
+
+\subsection{Non-commutative Addition}
+
 Now let's try to implement (+) normally
 
-\begin{code}
-    (+) (R a) (R b) = R $ a+b
-\end{code}
+\begin{spec}
+    (+) (R a) (R b) = R (a+b)
+\end{spec}
 
 But such implementation yields a wierd behaviour where (let a>b) then
 
@@ -58,6 +62,14 @@ But such implementation yields a wierd behaviour where (let a>b) then
     b+(a-b)=a \\
     a+(a-b)\neq b
 \end{math}
+
+Which makes the operation non-commutative.
+
+\subsection{Commutative Addition}
+
+So Let's first find a way to
+
+\newpage
 
 Extended Definition of Real Number Space
 
